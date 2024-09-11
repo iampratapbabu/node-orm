@@ -1,9 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
 
 module.exports = (sequelize, DataTypes) => {
 
-    const User = sequelize.define('users', {
+    const User = sequelize.define('user', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -19,16 +18,23 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
             // allowNull defaults to true
         },
-        // createdAt: {
-        //     type: DataTypes.DATE,
-        //     defaultValue: DataTypes.NOW,
-        // },
+        userid:{
+            type:DataTypes.STRING,
+            allowNull:false
+        },
+        password: {
+            type: DataTypes.STRING
+            // allowNull defaults to true
+        },
+        created: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+        },
     }, {
+        freezeTableName: true,
         timestamps: true,
     });
 
-    // `sequelize.define` also returns the model
-    //console.log(User === sequelize.models.User); // true
     return User;
 }
 

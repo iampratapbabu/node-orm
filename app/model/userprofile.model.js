@@ -1,7 +1,8 @@
+const { Sequelize, DataTypes } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
 
-    const Category = sequelize.define('category', {
+    const UserProfile = sequelize.define('user_profile', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -9,16 +10,23 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             autoIncrement:true,
         },
-        name: {
+        email: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull:true //it is true by default
+        },
+        country:{
+            type:DataTypes.STRING,
+            default:"India"
         }
-    }, { 
+    }, {
         freezeTableName: true,
         timestamps: true,
     });
 
-
-    return Category;
+    return UserProfile;
 }
 

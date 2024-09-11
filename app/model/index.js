@@ -26,8 +26,20 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 //datamodel files
-db.blogs_master = require('./blog.model')(sequelize,DataTypes);
-db.User = require('./user.model')(sequelize,DataTypes);
+db.blog = require('./blog.model')(sequelize,DataTypes);
+db.category = require('./category.model')(sequelize,DataTypes);
+db.user = require('./user.model')(sequelize,DataTypes);
+db.userProfile = require('./userprofile.model')(sequelize,DataTypes);
+
+
+
+//Establish relationships
+db.category.hasMany(db.blog, { foreignKey: 'category_id'});  // A category can have many posts
+db.blog.belongsTo(db.category, { foreignKey: 'id' }); // A post belongs to a category
+
+db.category.hasMany(db.blog, { foreignKey: 'category_id'});  // A category can have many posts
+db.blog.belongsTo(db.category, { foreignKey: 'id' }); // A post belongs to a category
+
 
 
 db.sequelize.sync({ force: false}); //whenever you change in table make it to true 

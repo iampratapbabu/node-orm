@@ -1,10 +1,13 @@
 const express = require("express");
 const app = express();
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 app.use(express.json())
 
 app.get('/',(req,res)=>{
-	res.send("Node orm Server status UP");
+	res.send("Node orm Server Status UP");
 })
 
 function setupRoute() {
@@ -14,7 +17,7 @@ function setupRoute() {
 setupRoute();
 
 
-
-app.listen(3300,()=>{
-	console.log("server started port-3300");
+const PORT = process.env.PORT
+app.listen(PORT,()=>{
+	console.log("Server Started On PORT:",PORT);
 });
