@@ -37,8 +37,8 @@ db.userProfile = require('./userprofile.model')(sequelize,DataTypes);
 db.category.hasMany(db.blog, { foreignKey: 'category_id'});  // A category can have many posts
 db.blog.belongsTo(db.category, { foreignKey: 'id' }); // A post belongs to a category
 
-db.category.hasMany(db.blog, { foreignKey: 'category_id'});  // A category can have many posts
-db.blog.belongsTo(db.category, { foreignKey: 'id' }); // A post belongs to a category
+db.user.hasOne(db.userProfile, { foreignKey: 'category_id'});  // A category can have many posts
+db.userProfile.belongsTo(db.user, { foreignKey: 'id' }); // A post belongs to a category
 
 
 
