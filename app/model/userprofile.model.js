@@ -21,7 +21,15 @@ module.exports = (sequelize, DataTypes) => {
         country:{
             type:DataTypes.STRING,
             default:"India"
-        }
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+              model: 'user', // Name of the target table (the table being referenced)
+              key: 'id'       // Key in the target table that is being referenced
+            }
+          },
     }, {
         freezeTableName: true,
         timestamps: true,
