@@ -10,13 +10,9 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             autoIncrement:true,
         },
-        email: {
+        address: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        phone: {
-            type: DataTypes.STRING,
-            allowNull:true //it is true by default
         },
         country:{
             type:DataTypes.STRING,

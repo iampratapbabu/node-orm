@@ -21,14 +21,22 @@ module.exports = (sequelize, DataTypes) => {
       body: {
         type: DataTypes.STRING,
       },
-      category_id: {
+      user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'category', // Name of the target table (the table being referenced)
+          model: 'user', // Name of the target table (the table being referenced)
           key: 'id'       // Key in the target table that is being referenced
         }
       },
+      // category_id: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   references: {
+      //     model: 'category', // Name of the target table (the table being referenced)
+      //     key: 'id'       // Key in the target table that is being referenced
+      //   }
+      // },
       deletedAt: {
         type: DataTypes.DATE,
         defaultValue: null,

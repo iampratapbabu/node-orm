@@ -30,7 +30,8 @@ exports.getSingleRow = async (whereCondition) =>{
         return await Blog.findOne({
             where: whereCondition,
             raw: true,
-            include:db.category, //if relation is established
+            //include:db.category, //if relation is established
+            include:db.user
             //attributes:['category.name'], //whichever main table column wants in output
             // include:[{
             //     model:db.category,

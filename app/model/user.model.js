@@ -10,15 +10,15 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             autoIncrement:true,
         },
-        firstName: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        lastName: {
-            type: DataTypes.STRING
-            // allowNull defaults to true
+        phone: {
+            type: DataTypes.STRING,
+            allowNull:true //it is true by default
         },
-        userid:{
+        email:{
             type:DataTypes.STRING,
             allowNull:false
         },
@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true,
         timestamps: true,
     });
+
+    User.associate = (models) =>{
+        //here also associations can be defined
+    }
 
     return User;
 }

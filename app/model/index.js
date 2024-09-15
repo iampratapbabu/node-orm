@@ -32,16 +32,25 @@ db.user = require('./user.model')(sequelize,DataTypes);
 db.userProfile = require('./userprofile.model')(sequelize,DataTypes);
 
 
-
 //Establish relationships
-db.category.hasMany(db.blog, { foreignKey: 'category_id'});  // A category can have many posts
-db.blog.belongsTo(db.category, { foreignKey: 'id' }); // A post belongs to a category
 
-db.user.hasOne(db.userProfile, { foreignKey: 'user_id'});  // A category can have many posts
-db.userProfile.belongsTo(db.user, { foreignKey: 'id' }); // A post belongs to a category
+//ONE TO ONE
+//here we can maintain relationship using only one statement also but to make other way around 
+//means ek statement se user ke through profile ka data aa jata but profile ke sath user ka data nhi aata so 
+//profile ka bhi relation lga diye so profile ke through user ka data bhi chahe to aa jaye
+db.user.hasOne(db.userProfile,{ foreignKey: 'user_id' });  
+db.userProfile.belongsTo(db.user,{ foreignKey: 'id' }); 
+
+
+//ONE TO MANY
+db.user.hasMany(db.blog, { foreignKey: 'user_id'});
+db.blog.belongsTo(db.user,{foreignKey:'id'});
+
+//MANY TO MANY
 
 
 
-db.sequelize.sync({ force: false}); //whenever you change in table make it to true 
+
+db.sequelize.sync({ force: true}); //whenever you change in table make it to true 
 
 module.exports = db;
