@@ -7,7 +7,7 @@ dotenv.config();
 app.use(express.json())
 
 app.get('/',(req,res)=>{
-	res.send("Node orm Server Status UP");
+	res.send("NodeOrm Server STATUS:[UP]");
 })
 
 function setupRoute() {

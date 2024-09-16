@@ -3,9 +3,9 @@ const {Sequelize,DataTypes} = require('sequelize');
 // console.log("env loaded",env);
 
 const sequelize = new Sequelize(
-    'dmb_db',
-    'root',
-    'password',
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
     {
         port: 3306,
         host: 'localhost',
@@ -16,9 +16,9 @@ const sequelize = new Sequelize(
 
 try{
     sequelize.authenticate();
-    console.log("Database Connection Success");
+    console.log("Database Connection Success [✓]");
 }catch(error){
-    console.log("Error Connecting Database: ",error);
+    console.log("Error Connecting Database [X]", error);
 }
 
 const db = {};
