@@ -1,8 +1,16 @@
-const db = require('../model');
-const sequelize = db.sequelize;
+
 const { QueryTypes, Utils } = require("sequelize");
+const db = require('../model');
 const User = db.user;
-const UserProfile = db.userProfile
+const sequelize = db.sequelize;
+const UserProfile = db.userProfile;
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const bcrypt = require('bcrypt');
+const CustomError = require('../lib/custom.error');
+const { errorResponse, successResponse } = require('../lib/response.handler');
+
+
 
 const getAllUsers = async (req, res) => {
     try {
@@ -13,7 +21,7 @@ const getAllUsers = async (req, res) => {
 
         return res.status(200).json({
             status: "success",
-            message:"all users fetched",
+            message: "all users fetched",
             data: users
         })
 
@@ -35,7 +43,7 @@ const getSingleUser = async (req, res) => {
                 id: userId
             },
             //attributes: ['id', 'lastName']
-            include:[db.userProfile,db.blog]
+            include: [db.userProfile, db.blog]
         });
         //whichever attributes we will pass it will selet only that
 
@@ -56,14 +64,17 @@ const getSingleUser = async (req, res) => {
 const createUser = async (req, res) => {
     try {
         console.log(req.body);
-        const { name,email,phone,password } = req.body;
+        let { name, email, phone, password } = req.body;
+
+        //hasing password
+        password = await bcrypt.hash(password, 12);
 
         //creating a user first type
         const newUser = await User.build({
             name,
             email,
             phone,
-            password
+            password,
         });
 
         await newUser.save();
@@ -75,7 +86,7 @@ const createUser = async (req, res) => {
 
         return res.status(200).json({
             status: "success",
-            message:"user created successfully",
+            message: "user created successfully",
             data: newUser
         })
 
@@ -88,6 +99,37 @@ const createUser = async (req, res) => {
     }
 }
 
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await db.user.findOne({
+            where: {
+                email
+            },
+        });
+
+        console.log("user found on login", user);
+
+        if (!user) {
+            throw new CustomError("auth_error", 400, "User Not Exist")
+        }
+        if (await bcrypt.compare(password, user.password)) {
+            let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+                expiresIn: 86400 // expires in 24 hours
+            });
+            successResponse(res, 'User LoggedIn Successfully', { token, user });
+        } else {
+            throw new CustomError("auth_error", 400, "Invalid Credentials")
+        }
+
+    } catch (err) {
+        console.log('server error', err);
+        errorResponse(res, 'loginUser', err);
+
+    }
+}
+
 const getUserProfile = async (req, res) => {
     try {
         const userId = req.query.userid;
@@ -96,7 +138,7 @@ const getUserProfile = async (req, res) => {
                 id: userId
             },
             //attributes: ['id', 'lastName']
-            include:[db.user]
+            include: [db.user]
         });
         //whichever attributes we will pass it will selet only that
 
@@ -117,13 +159,13 @@ const getUserProfile = async (req, res) => {
 const createUserProfile = async (req, res) => {
     try {
         console.log(req.body);
-        const { address,country,userid } = req.body;
+        const { address, country, userid } = req.body;
 
         //creating a user first type
         const newUserProfile = await UserProfile.build({
             address,
             country,
-            user_id:userid
+            user_id: userid
         });
 
         await newUserProfile.save();
@@ -135,7 +177,7 @@ const createUserProfile = async (req, res) => {
 
         return res.status(200).json({
             status: "success",
-            message:"Profile created successfully",
+            message: "Profile created successfully",
             data: newUserProfile
         })
 
@@ -199,6 +241,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
     createUser,
+    loginUser,
     createUserProfile,
     getUserProfile,
     getSingleUser,

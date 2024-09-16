@@ -1,7 +1,8 @@
-const Client = require('../models/client.model');
 const { errorResponse, successResponse } = require('../lib/response.handler');
 const jwt = require('jsonwebtoken');
 
+const db = require('../model');
+const User = db.user;
 
 const protect = async (req, res, next) => {
   try {
@@ -10,7 +11,11 @@ const protect = async (req, res, next) => {
       return errorResponse(res, 'failed to authenticate', 401, {});
     }
     let decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    let user = await User.findById(decoded.id);
+    const user = await db.user.findOne({
+      where: {
+          id:decoded.id
+      },
+  });
     if (!user) return errorResponse(res, 'no user found', 404, {});
     req.user = user;
     next();
