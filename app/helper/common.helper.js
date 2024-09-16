@@ -1,0 +1,3 @@
+exports.runCommonFun = () =>{
+    return "abc";
+}

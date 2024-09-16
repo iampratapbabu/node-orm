@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
         host: 'localhost',
         dialect: "mysql",
         logging: false, //set it to true to log the queries
-      }
+    }
 );
 
 try{
