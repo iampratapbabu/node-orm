@@ -47,6 +47,7 @@ db.user.hasMany(db.blog, { foreignKey: 'user_id'});
 db.blog.belongsTo(db.user,{foreignKey:'id'});
 
 //MANY TO MANY
+//create two tables one for keeping master values other for mapping it
 
 
 
