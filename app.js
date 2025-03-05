@@ -6,9 +6,7 @@ dotenv.config();
 
 app.use(express.json())
 
-app.get('/',(req,res)=>{
-	res.send("NodeOrm Server STATUS:[UP]");
-})
+app.get('/',(req,res)=>{res.send("Client Auth System Server STATUS:[UP]")})
 
 function setupRoute() {
     const routes = require("./app/router");

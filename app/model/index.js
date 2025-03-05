@@ -26,10 +26,10 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 //datamodel files
-db.blog = require('./blog.model')(sequelize,DataTypes);
-db.category = require('./category.model')(sequelize,DataTypes);
-db.user = require('./user.model')(sequelize,DataTypes);
-db.userProfile = require('./userprofile.model')(sequelize,DataTypes);
+db.blog = require('./blog/blog.model')(sequelize,DataTypes);
+db.category = require('./category/category.model')(sequelize,DataTypes);
+db.user = require('./user/user.model')(sequelize,DataTypes);
+db.userProfile = require('./user/user_profile.model')(sequelize,DataTypes);
 
 
 //Establish relationships
