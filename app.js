@@ -3,10 +3,14 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
+//Env Configuration
+const currentEnv = require('./app/config/index');
+console.log("current env file", currentEnv);
+
 
 app.use(express.json())
 
-app.get('/',(req,res)=>{res.send("Client Auth System Server STATUS:[UP]")})
+app.get('/', (req, res) => { res.send("Client Auth System Server STATUS:[UP]") })
 
 function setupRoute() {
     const routes = require("./app/router");
@@ -15,7 +19,7 @@ function setupRoute() {
 setupRoute();
 
 
-const PORT = process.env.PORT
-app.listen(PORT,()=>{
-	console.log("Server Started On PORT:",PORT);
+const port = currentEnv.PORT;
+app.listen(port, () => {
+	console.log(`${currentEnv.SERVER_STARTED} On PORT: ${port}`);
 });

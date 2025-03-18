@@ -1,6 +1,8 @@
 {
-    "PORT":8200,
+    "PORT":8607,
     "DB_NAME":"node-orm",
     "DB_USER":"root",
-    "DB_PASSWORD":"password"
+    "DB_PASSWORD":"password",
+    "SERVER_STARTED":"UAT (user acceptance testing) Sever Started"
+
 }
