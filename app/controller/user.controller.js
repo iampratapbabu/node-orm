@@ -112,7 +112,7 @@ const loginUser = async (req, res) => {
         console.log("user found on login", user);
 
         if (!user) {
-            throw new CustomError("auth_error", 400, "User Not Exist")
+            throw new CustomError("auth_error", 400, "User Not1 Exist")
         }
         if (await bcrypt.compare(password, user.password)) {
             let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
